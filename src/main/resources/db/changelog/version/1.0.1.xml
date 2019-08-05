@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    
+    <changeSet id="2017-10-02 09:00" author="yildirim.adiguzel">
+        <createSequence sequenceName="seq_scheduled_jobs" incrementBy="50"/>
+
+        <createTable tableName="scheduled_jobs">
+            <column name="id" type="int4">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="application" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cron_expression" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="job_type" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="active" type="boolean" defaultValue="0"/>
+            <column name="url" type="varchar(1000)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="bean_scheduled_jobs">
+            <column name="id" type="int4">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="bean_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="method_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="rest_scheduled_jobs">
+            <column name="id" type="int4">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="path" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="method" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payload" type="varchar(1000)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="scheduled_job_execution_histories">
+            <column name="id" type="varchar(100)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="scheduled_job_id" type="int4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="job_execution_status" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

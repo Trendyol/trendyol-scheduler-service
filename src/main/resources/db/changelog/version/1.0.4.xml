@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="2018-10-17 14:00" author="cemalettin batuhan">
+
+        <createSequence sequenceName="seq_future_jobs" incrementBy="50"/>
+
+        <createTable tableName="future_jobs">
+            <column name="id" type="int8">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="task_id" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hash_key" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expire_time" type="datetime"/>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="future_job_status" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="application" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="path" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="method" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payload" type="varchar(1024)"/>
+            <column name="created_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="url" type="varchar(1000)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="future_jobs" indexName="idx_future_jobs_hash_key">
+            <column name="hash_key"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>

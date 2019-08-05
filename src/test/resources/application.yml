@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: Trendyol Scheduler Service
+  profiles:
+    active: unit-test
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.couchbase.CouchbaseAutoConfiguration
+  rabbitmq:
+    host: 127.0.0.1
+    username: guest
+    password: guest
+    listener:
+      direct:
+        auto-startup: false
+      simple:
+        auto-startup: false
+  liquibase:
+    enabled: false
+
+swagger:
+  host:
+    url: localhost:6060
+    path:
+
+couchbase:
+  schedulerBucket: Scheduler
+  schedulerBucketPassword: password

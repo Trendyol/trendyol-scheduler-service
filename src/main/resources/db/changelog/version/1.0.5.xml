@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="2019-06-19 20:00" author="bahadir.tasdemir">
+
+        <sql>
+            INSERT INTO scheduled_jobs (ID,NAME,application,job_type,cron_expression,created_date,last_modified_date,active,url) VALUES (nextval('seq_scheduled_jobs'),'Sample bean scheduled job','test-application','bean_scheduled_job','0 0/5 * * * ?',now(),now(),TRUE,'http://localhost:6060');
+            INSERT INTO bean_scheduled_jobs VALUES (currval('seq_scheduled_jobs'),'sampleJobService','invoke');
+
+            INSERT INTO scheduled_jobs (ID,NAME,application,job_type,cron_expression,created_date,last_modified_date,active,url) VALUES (nextval('seq_scheduled_jobs'),'Sample rest scheduled job','test-application','rest_scheduled_job','0 0/5 * * * ?',now(),now(),TRUE,'http://localhost:6060');
+            INSERT INTO rest_scheduled_jobs VALUES (currval('seq_scheduled_jobs'),'/job/invoke','GET','');
+
+            INSERT INTO future_jobs (ID,task_id,hash_key,start_time,expire_time,name,future_job_status,application,path,method,payload,created_date,last_modified_date,url)
+            VALUES (nextval('seq_future_jobs'),'sample-future-job','sample-future-job-hash-key',NOW() + INTERVAL '5 minutes',NOW() + INTERVAL '10 minutes','Sample Future Job','WAITING','test-application','/future-job/invoke','GET','',now(),now(),'http://localhost:6060');
+        </sql>
+
+    </changeSet>
+
+</databaseChangeLog>

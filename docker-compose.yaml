@@ -1,0 +1,29 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:9.6.12
+    ports:
+      - "5432:5432"
+    container_name: scheduler-service-pgs
+    environment:
+      POSTGRES_PASSWORD: 123qwe
+      POSTGRES_DB: scheduler
+      POSTGRES_USER: root
+
+  rabbit:
+    image: rabbitmq:3-management
+    container_name: scheduler-service-rabbitmq
+    ports:
+      - "5671-5672:5671-5672"
+      - "15671-15672:15671-15672"
+
+  couchbase:
+    build: couchbase-docker-file
+    image: scheduler-service-couchbase-image
+    container_name: scheduler-service-couchbase
+    ports:
+      - 8091:8091
+      - 8092:8092
+      - 8093:8093
+      - 8094:8094
+      - 11210:11210

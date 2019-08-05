@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+  This file contains some false positive bugs detected by Findbugs. Their
+  false positive nature has been analyzed individually and they have been
+  put here to instruct Findbugs it must ignore them.
+  Reference:
+  This file format: http://findbugs.sourceforge.net/manual/filter.html
+  Bug pattern names and codes: http://findbugs.sourceforge.net/bugDescriptions.html
+  Bug categories: https://code.google.com/p/findbugs/source/browse/findbugs/etc/findbugs.xml
+-->
+<FindBugsFilter>
+    <Match>
+        <Bug code="EI" pattern="EI_EXPOSE_REP"/>
+    </Match>
+
+    <Match>
+        <Bug code="EI2" pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <Match>
+        <Bug code="NP" pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+
+    <!-- Ignore test stuff unless security or Junit specific rule -->
+    <Match>
+        <Or>
+            <!--<Class name="~.*\.*Test" /> -->
+            <Class name="~.*Test"/>
+            <Package name="~.*Test\.?.*"/>
+        </Or>
+        <Not>
+            <Or>
+                <Bug category="SECURITY"/>
+                <Bug code="IJU"/>
+            </Or>
+        </Not>
+    </Match>
+</FindBugsFilter>
