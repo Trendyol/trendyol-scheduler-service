@@ -1,5 +1,7 @@
 # Trendyol Scheduler Service
 
+![Trendyol Scheduler Service](https://raw.githubusercontent.com/Trendyol/trendyol-scheduler-service/master/src/main/resources/scheduler-service-icon.png)
+
 - Easily scheduled jobs for micro service architecture APIs.
 
 ## Setup And Run
