@@ -4,6 +4,12 @@
 
 - Easily scheduled jobs for micro service architecture APIs.
 
+## Requirements
+
+- Jdk 1.8
+- Apache Maven 3.3.9
+- Docker (for mac/windows)
+
 ## Setup And Run
 
 - To run scheduler-service at your local environment, please run the commands below;
