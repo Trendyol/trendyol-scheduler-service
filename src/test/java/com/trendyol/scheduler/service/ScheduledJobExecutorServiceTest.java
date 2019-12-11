@@ -39,7 +39,7 @@ public class ScheduledJobExecutorServiceTest {
     private RestTemplateScheduledJobExecutorService restTemplateScheduledJobExecutorService;
 
     @Mock
-    private JobSynchronizeService jobSynchronizeService;
+    private JobSynchronizer jobSynchronizer;
 
     @Test
     public void it_should_execute_rest_template_end_point_and_save_history_record_with_in_progress_status_when_scheduler_hits() {
@@ -49,7 +49,7 @@ public class ScheduledJobExecutorServiceTest {
 
         ArgumentCaptor<ScheduledJobExecutionHistory> scheduledJobExecutionHistoryArgumentCaptor = ArgumentCaptor.forClass(ScheduledJobExecutionHistory.class);
 
-        when(jobSynchronizeService.isAssignableToThisExecution(scheduledJob)).thenReturn(true);
+        when(jobSynchronizer.isAssignableToThisExecution(scheduledJob)).thenReturn(true);
 
         //When
         scheduledJobExecutorService.execute(scheduledJob);
@@ -76,7 +76,7 @@ public class ScheduledJobExecutorServiceTest {
 
         RuntimeException thrownException = new RuntimeException("Runtime Exception Occurred");
         doThrow(thrownException).when(restTemplateScheduledJobExecutorService).executeWithTaskId(any(String.class), eq(scheduledJob));
-        when(jobSynchronizeService.isAssignableToThisExecution(scheduledJob)).thenReturn(true);
+        when(jobSynchronizer.isAssignableToThisExecution(scheduledJob)).thenReturn(true);
 
         //When
         scheduledJobExecutorService.execute(scheduledJob);
@@ -105,7 +105,7 @@ public class ScheduledJobExecutorServiceTest {
         String veryLongErrorMessage = RandomStringUtils.randomAlphabetic(10000);
         RuntimeException thrownException = new RuntimeException(veryLongErrorMessage);
         doThrow(thrownException).when(restTemplateScheduledJobExecutorService).executeWithTaskId(any(String.class), eq(scheduledJob));
-        when(jobSynchronizeService.isAssignableToThisExecution(scheduledJob)).thenReturn(true);
+        when(jobSynchronizer.isAssignableToThisExecution(scheduledJob)).thenReturn(true);
 
         //When
         scheduledJobExecutorService.execute(scheduledJob);
@@ -126,7 +126,7 @@ public class ScheduledJobExecutorServiceTest {
         Clock.freeze();
         BeanScheduledJob scheduledJob = BeanScheduledJobBuilder.aBeanScheduledJob().name("scheduler1").cronExpression("* * * * * *").methodName("method").beanName("bean").application("application").build();
 
-        when(jobSynchronizeService.isAssignableToThisExecution(scheduledJob)).thenReturn(false);
+        when(jobSynchronizer.isAssignableToThisExecution(scheduledJob)).thenReturn(false);
 
         //When
         scheduledJobExecutorService.execute(scheduledJob);

@@ -3,6 +3,9 @@
 ![Trendyol Scheduler Service](https://raw.githubusercontent.com/Trendyol/trendyol-scheduler-service/master/src/main/resources/scheduler-service-icon.png)
 
 - Easily scheduled jobs for micro service architecture APIs.
+- It has two setup: Postgres + Couchbase and MySQL + Redis 
+
+The Application runs with Postgres + Couchbase as default. If you want to use MySQL + Redis, you can add -Dspring.profiles.active=mysql-redis as JVM option. 
 
 ## Requirements
 

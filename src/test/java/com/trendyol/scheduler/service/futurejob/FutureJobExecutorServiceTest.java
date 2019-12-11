@@ -3,7 +3,7 @@ package com.trendyol.scheduler.service.futurejob;
 import com.trendyol.scheduler.builder.FutureJobBuilder;
 import com.trendyol.scheduler.domain.FutureJob;
 import com.trendyol.scheduler.domain.enums.FutureJobStatus;
-import com.trendyol.scheduler.service.JobSynchronizeService;
+import com.trendyol.scheduler.service.JobSynchronizer;
 import com.trendyol.scheduler.util.Executor;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,7 +50,7 @@ public class FutureJobExecutorServiceTest {
     private FutureJobService futureJobService;
 
     @Mock
-    private JobSynchronizeService jobSynchronizeService;
+    private JobSynchronizer jobSynchronizer;
 
     @Captor
     private ArgumentCaptor<HttpEntity> httpEntityArgumentCaptor;
@@ -72,7 +72,7 @@ public class FutureJobExecutorServiceTest {
                 .url("url")
                 .build();
 
-        when(jobSynchronizeService.isAssignableToThisExecution(futureJob)).thenReturn(true);
+        when(jobSynchronizer.isAssignableToThisExecution(futureJob)).thenReturn(true);
         when(futureJobService.findById(1L)).thenReturn(Optional.empty());
         when(restTemplate.exchange(eq("url/path"), eq(HttpMethod.POST), any(HttpEntity.class), eq(Void.class)))
                 .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
@@ -103,7 +103,7 @@ public class FutureJobExecutorServiceTest {
                 .url("url")
                 .build();
 
-        when(jobSynchronizeService.isAssignableToThisExecution(futureJob)).thenReturn(true);
+        when(jobSynchronizer.isAssignableToThisExecution(futureJob)).thenReturn(true);
         when(futureJobService.findById(1L)).thenReturn(Optional.empty());
         when(restTemplate.exchange(eq("url/path"), eq(HttpMethod.POST), any(HttpEntity.class), eq(Void.class)))
                 .thenReturn(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
@@ -134,7 +134,7 @@ public class FutureJobExecutorServiceTest {
                 .url("url")
                 .build();
 
-        when(jobSynchronizeService.isAssignableToThisExecution(futureJob)).thenReturn(true);
+        when(jobSynchronizer.isAssignableToThisExecution(futureJob)).thenReturn(true);
         when(futureJobService.findById(1L)).thenReturn(Optional.empty());
         when(restTemplate.exchange(eq("url/path"), eq(HttpMethod.POST), any(HttpEntity.class), eq(Void.class)))
                 .thenThrow(new RuntimeException("error"));
@@ -170,7 +170,7 @@ public class FutureJobExecutorServiceTest {
                 .url("url")
                 .build();
 
-        when(jobSynchronizeService.isAssignableToThisExecution(futureJob)).thenReturn(true);
+        when(jobSynchronizer.isAssignableToThisExecution(futureJob)).thenReturn(true);
         when(futureJobService.findById(1L)).thenReturn(Optional.empty());
 
         //when
@@ -189,7 +189,7 @@ public class FutureJobExecutorServiceTest {
     public void it_should_not_execute_not_waiting_future_job_before_running() {
         //given
         FutureJob cancelledFutureJob = FutureJobBuilder.aFutureJob().id(10L).futureJobStatus(FutureJobStatus.CANCELLED).build();
-        when(jobSynchronizeService.isAssignableToThisExecution(cancelledFutureJob)).thenReturn(true);
+        when(jobSynchronizer.isAssignableToThisExecution(cancelledFutureJob)).thenReturn(true);
         when(futureJobService.findById(10L)).thenReturn(Optional.ofNullable(cancelledFutureJob));
 
         //when
@@ -213,13 +213,13 @@ public class FutureJobExecutorServiceTest {
                 .payload("123")
                 .url("url")
                 .build();
-        when(jobSynchronizeService.isAssignableToThisExecution(futureJob)).thenReturn(false);
+        when(jobSynchronizer.isAssignableToThisExecution(futureJob)).thenReturn(false);
 
         //when
         futureJobExecutorService.execute(futureJob);
 
         //then
-        verify(jobSynchronizeService).isAssignableToThisExecution(futureJob);
+        verify(jobSynchronizer).isAssignableToThisExecution(futureJob);
         verifyZeroInteractions(futureJobService, restTemplate);
     }
 }

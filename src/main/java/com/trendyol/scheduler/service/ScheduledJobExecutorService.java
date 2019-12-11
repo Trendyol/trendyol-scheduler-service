@@ -24,8 +24,8 @@ public class ScheduledJobExecutorService extends JobExecutorService<ScheduledJob
     public ScheduledJobExecutorService(
             ScheduledJobExecutionHistoryService scheduledJobExecutionHistoryService,
             RestTemplateScheduledJobExecutorService restTemplateScheduledJobExecutorService,
-            JobSynchronizeService jobSynchronizeService) {
-        super(jobSynchronizeService);
+            JobSynchronizer jobSynchronizer) {
+        super(jobSynchronizer);
         this.scheduledJobExecutionHistoryService = scheduledJobExecutionHistoryService;
         this.restTemplateScheduledJobExecutorService = restTemplateScheduledJobExecutorService;
     }

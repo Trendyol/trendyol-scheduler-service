@@ -6,7 +6,7 @@
 
     <changeSet id="2019-06-19 20:00" author="bahadir.tasdemir">
 
-        <sql>
+        <sql dbms="postgresql">
             INSERT INTO scheduled_jobs (ID,NAME,application,job_type,cron_expression,created_date,last_modified_date,active,url) VALUES (nextval('seq_scheduled_jobs'),'Sample bean scheduled job','test-application','bean_scheduled_job','0 0/5 * * * ?',now(),now(),TRUE,'http://localhost:6060');
             INSERT INTO bean_scheduled_jobs VALUES (currval('seq_scheduled_jobs'),'sampleJobService','invoke');
 
@@ -15,6 +15,17 @@
 
             INSERT INTO future_jobs (ID,task_id,hash_key,start_time,expire_time,name,future_job_status,application,path,method,payload,created_date,last_modified_date,url)
             VALUES (nextval('seq_future_jobs'),'sample-future-job','sample-future-job-hash-key',NOW() + INTERVAL '5 minutes',NOW() + INTERVAL '10 minutes','Sample Future Job','WAITING','test-application','/future-job/invoke','GET','',now(),now(),'http://localhost:6060');
+        </sql>
+
+        <sql dbms="mysql">
+            INSERT INTO scheduled_jobs (ID,NAME,application,job_type,cron_expression,created_date,last_modified_date,active,url) VALUES (1,'Sample bean scheduled job','test-application','bean_scheduled_job','0 0/5 * * * ?',now(),now(),TRUE,'http://localhost:6060');
+            INSERT INTO bean_scheduled_jobs VALUES (1,'sampleJobService','invoke');
+
+            INSERT INTO scheduled_jobs (ID,NAME,application,job_type,cron_expression,created_date,last_modified_date,active,url) VALUES (2,'Sample rest scheduled job','test-application','rest_scheduled_job','0 0/5 * * * ?',now(),now(),TRUE,'http://localhost:6060');
+            INSERT INTO rest_scheduled_jobs VALUES (2,'/job/invoke','GET','');
+
+            INSERT INTO future_jobs (ID,task_id,hash_key,start_time,expire_time,name,future_job_status,application,path,method,payload,created_date,last_modified_date,url)
+            VALUES (3,'sample-future-job','sample-future-job-hash-key',sysdate() + INTERVAL 5 MINUTE,sysdate() + INTERVAL 10 MINUTE,'Sample Future Job','WAITING','test-application','/future-job/invoke','GET','',now(),now(),'http://localhost:6060');
         </sql>
 
     </changeSet>

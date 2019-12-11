@@ -10,6 +10,14 @@ services:
       POSTGRES_DB: scheduler
       POSTGRES_USER: root
 
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    container_name: scheduler-service-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+
   rabbit:
     image: rabbitmq:3-management
     container_name: scheduler-service-rabbitmq
