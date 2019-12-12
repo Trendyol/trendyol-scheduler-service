@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -28,12 +29,12 @@ public class JobSynchronizeRedisService implements JobSynchronizer {
     private Long getCounter(SyncJob job) {
         Object counter = redisTemplate.opsForValue().get(job.jobKey());
 
-        if (counter != null) {
+        if (Objects.nonNull(counter)) {
             redisTemplate.expire(job.jobKey(), job.jobTTL(), TimeUnit.SECONDS);
         } else {
             redisTemplate.opsForValue().set(job.jobKey(), COUNTER_DELTA_VALUE);
             redisTemplate.expire(job.jobKey(), job.jobTTL(), TimeUnit.SECONDS);
-            counter = 0L;
+            counter = INITIAL_COUNTER_VALUE;
         }
 
         return (Long) counter;

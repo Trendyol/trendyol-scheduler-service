@@ -2,30 +2,9 @@ spring:
   application:
     name: Trendyol Scheduler Service
   profiles:
-    active: "postgres-couchbase"
-
-server:
-  port: 6060
-
-swagger:
-  host:
-    url: localhost:6060
-    path:
-
-management:
-  server:
-    servlet:
-      context-path: /_monitoring
-
----
-
-spring:
-  profiles: postgres-couchbase
+    active: "postgres"
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/scheduler
-    username: root
-    password: 123qwe
     hikari:
       pool-name: scheduler-service-api-db-pool
       maximum-pool-size: 30
@@ -34,18 +13,16 @@ spring:
         prepStmtCacheSize: 250
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
-    database: POSTGRESQL
-    show-sql: true
-    open-in-view: false
-    properties:
-      hibernate.id.new_generator_mappings: true
-      hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: false
-      hibernate.hbm2ddl.auto: validate
-      hibernate.temp.use_jdbc_metadata_defaults: false
-      hibernate.jdbc.lob.non_contextual_creation: true
+    jpa:
+      show-sql: true
+      open-in-view: false
+      properties:
+        hibernate.id.new_generator_mappings: true
+        hibernate.cache.use_query_cache: false
+        hibernate.generate_statistics: false
+        hibernate.hbm2ddl.auto: validate
+        hibernate.temp.use_jdbc_metadata_defaults: false
+        hibernate.jdbc.lob.non_contextual_creation: true
   rabbitmq:
     host: 127.0.0.1
     username: guest
@@ -66,6 +43,22 @@ spring:
     bootstrap-hosts: 127.0.0.1
     bucket:
       password: password
+  redis:
+    host: localhost
+    port: 6379
+
+server:
+  port: 6060
+
+swagger:
+  host:
+    url: localhost:6060
+    path:
+
+management:
+  server:
+    servlet:
+      context-path: /_monitoring
 
 couchbase:
   schedulerBucket: Scheduler
@@ -78,52 +71,27 @@ scheduler-service:
 ---
 
 spring:
-  profiles: mysql-redis
+  profiles: postgres
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/scheduler
+    username: root
+    password: 123qwe
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    database: POSTGRESQL
+    properties:
+      hibernate.jdbc.lob.non_contextual_creation: true
+
+---
+
+spring:
+  profiles: mysql
+  datasource:
     url: jdbc:mysql://localhost:3306/scheduler?useSSL=false
     username: root
     password: 123456
-    hikari:
-      pool-name: scheduler-service-api-db-pool
-      maximum-pool-size: 30
-      data-source-properties:
-        cachePrepStmts: true
-        prepStmtCacheSize: 250
-        prepStmtCacheSqlLimit: 2048
-        useServerPrepStmts: true
   jpa:
     database-platform: org.hibernate.dialect.MySQL57Dialect
     database: mysql
-    show-sql: true
-    open-in-view: false
     properties:
-      hibernate.id.new_generator_mappings: true
-      hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: false
       hibernate.hbm2ddl.auto: none
-      hibernate.temp.use_jdbc_metadata_defaults: false
-      hibernate.jdbc.lob.non_contextual_creation: true
-  rabbitmq:
-    host: 127.0.0.1
-    username: guest
-    password: guest
-    virtual-host: /
-    listener:
-      direct:
-        retry:
-          enabled: true
-          max-attempts: 5
-          initial-interval: 1000
-          multiplier: 1
-          max-interval: 10000
-  liquibase:
-    enabled: true
-    change-log: classpath:db/changelog/db.changelog-master.xml
-  redis:
-    host: localhost
-    port: 6379
-
-scheduler-service:
-  synchronizer:
-    type: redis

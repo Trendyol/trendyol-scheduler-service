@@ -30,6 +30,7 @@
         <logback-gelf.version>1.0.4</logback-gelf.version>
         <powermock-api-mockito.version>2.0.2</powermock-api-mockito.version>
         <googlefindbugs-annotations.version>3.0.1</googlefindbugs-annotations.version>
+        <jedis.version>2.9.0</jedis.version>
         <sonar.exclusions>
             **/scheduler/configuration/**/*
         </sonar.exclusions>
@@ -174,7 +175,7 @@
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>2.9.0</version>
+            <version>${jedis.version}</version>
             <type>jar</type>
         </dependency>
 
