@@ -10,9 +10,8 @@ The Application runs with Postgres + Couchbase by default. If you want to use My
 To switch the job synchronization type, you can set "SCHEDULER_SERVICE_SYNCHRONIZER_TYPE" environment parameter as "couchbase" or "redis".
 
 For example:
-
--SCHEDULER_SERVICE_SYNCHRONIZER_TYPE = couchbase
--SCHEDULER_SERVICE_SYNCHRONIZER_TYPE = redis
+- SCHEDULER_SERVICE_SYNCHRONIZER_TYPE = couchbase
+- SCHEDULER_SERVICE_SYNCHRONIZER_TYPE = redis
 
 ## Requirements
 
