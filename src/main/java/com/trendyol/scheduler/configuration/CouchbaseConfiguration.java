@@ -4,6 +4,7 @@ import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.env.CouchbaseEnvironment;
 import com.couchbase.client.java.env.DefaultCouchbaseEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -15,6 +16,7 @@ import java.util.List;
 @Configuration
 @EnableCouchbaseRepositories
 @Profile("!unit-test")
+@ConditionalOnProperty(name = "scheduler-service.synchronizer.type", havingValue = "couchbase")
 public class CouchbaseConfiguration extends AbstractCouchbaseConfiguration {
 
     private final CouchbaseConfigurationProperties couchbaseConfigurationProperties;

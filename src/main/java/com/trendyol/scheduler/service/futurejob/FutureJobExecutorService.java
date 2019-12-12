@@ -4,7 +4,7 @@ import com.trendyol.scheduler.constants.AuditionConstants;
 import com.trendyol.scheduler.domain.FutureJob;
 import com.trendyol.scheduler.domain.enums.FutureJobStatus;
 import com.trendyol.scheduler.service.JobExecutorService;
-import com.trendyol.scheduler.service.JobSynchronizeService;
+import com.trendyol.scheduler.service.JobSynchronizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +30,8 @@ public class FutureJobExecutorService extends JobExecutorService<FutureJob> {
     @Autowired
     public FutureJobExecutorService(RestTemplate restTemplate,
                                     FutureJobService futureJobService,
-                                    JobSynchronizeService jobSynchronizeService) {
-        super(jobSynchronizeService);
+                                    JobSynchronizer jobSynchronizer) {
+        super(jobSynchronizer);
         this.restTemplate = restTemplate;
         this.futureJobService = futureJobService;
     }

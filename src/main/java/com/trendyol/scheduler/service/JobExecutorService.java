@@ -7,10 +7,10 @@ public abstract class JobExecutorService<T extends SyncJob> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JobExecutorService.class);
 
-    private final JobSynchronizeService jobSynchronizeService;
+    private final JobSynchronizer jobSynchronizer;
 
-    public JobExecutorService(JobSynchronizeService jobSynchronizeService) {
-        this.jobSynchronizeService = jobSynchronizeService;
+    public JobExecutorService(JobSynchronizer jobSynchronizer) {
+        this.jobSynchronizer = jobSynchronizer;
     }
 
     public final void execute(T job) {
@@ -25,7 +25,7 @@ public abstract class JobExecutorService<T extends SyncJob> {
     }
 
     final boolean isNotAssignableToCurrentInstance(T job) {
-        return !jobSynchronizeService.isAssignableToThisExecution(job);
+        return !jobSynchronizer.isAssignableToThisExecution(job);
     }
 
     public abstract void process(T job);

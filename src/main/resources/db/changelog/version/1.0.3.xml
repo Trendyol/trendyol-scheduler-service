@@ -4,8 +4,12 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="2018-09-21 11:45" author="bay.cetinkaya">
+    <changeSet id="2018-09-21 11:45" author="bay.cetinkaya" dbms="postgresql">
         <dropNotNullConstraint tableName="scheduled_job_execution_histories" columnName="end_date"/>
+    </changeSet>
+
+    <changeSet id="2018-09-21 11:45" author="bay.cetinkaya" dbms="mysql">
+        <dropNotNullConstraint tableName="scheduled_job_execution_histories" columnName="end_date" columnDataType="datetime"/>
     </changeSet>
 
 </databaseChangeLog>

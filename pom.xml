@@ -30,6 +30,7 @@
         <logback-gelf.version>1.0.4</logback-gelf.version>
         <powermock-api-mockito.version>2.0.2</powermock-api-mockito.version>
         <googlefindbugs-annotations.version>3.0.1</googlefindbugs-annotations.version>
+        <jedis.version>2.9.0</jedis.version>
         <sonar.exclusions>
             **/scheduler/configuration/**/*
         </sonar.exclusions>
@@ -145,6 +146,11 @@
         </dependency>
 
         <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-couchbase</artifactId>
             <exclusions>
@@ -159,6 +165,18 @@
             <groupId>com.couchbase.client</groupId>
             <artifactId>java-client</artifactId>
             <version>${couchbase-java-client-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
+            <type>jar</type>
         </dependency>
 
         <dependency>
@@ -190,6 +208,17 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>

@@ -2,7 +2,7 @@ package com.trendyol.scheduler.jobs;
 
 import com.trendyol.scheduler.builder.domain.RestScheduledJobBuilder;
 import com.trendyol.scheduler.domain.ScheduledJob;
-import com.trendyol.scheduler.service.JobSynchronizeService;
+import com.trendyol.scheduler.service.JobSynchronizer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,7 +20,7 @@ public class InternalJobExecutorTemplateTest {
     private InternalJobExecutorTemplate internalJobExecutorTemplate;
 
     @Mock
-    private JobSynchronizeService jobSynchronizeService;
+    private JobSynchronizer jobSynchronizer;
 
     @Mock
     private Runnable runnable;
@@ -29,7 +29,7 @@ public class InternalJobExecutorTemplateTest {
     public void it_should_run_scheduled_job() {
         //Given
         ScheduledJob scheduledJob = RestScheduledJobBuilder.aRestScheduledJob().build();
-        when(jobSynchronizeService.isAssignableToThisExecution(scheduledJob)).thenReturn(true);
+        when(jobSynchronizer.isAssignableToThisExecution(scheduledJob)).thenReturn(true);
 
         //When
         internalJobExecutorTemplate.run(scheduledJob, runnable);
@@ -42,7 +42,7 @@ public class InternalJobExecutorTemplateTest {
     public void it_should_not_run_job_when_is_not_assignable() {
         //Given
         ScheduledJob scheduledJob = RestScheduledJobBuilder.aRestScheduledJob().build();
-        when(jobSynchronizeService.isAssignableToThisExecution(scheduledJob)).thenReturn(false);
+        when(jobSynchronizer.isAssignableToThisExecution(scheduledJob)).thenReturn(false);
 
         //When
         internalJobExecutorTemplate.run(scheduledJob, runnable);

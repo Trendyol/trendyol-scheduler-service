@@ -1,12 +1,14 @@
 package com.trendyol.scheduler.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "couchbase")
+@ConditionalOnProperty(name = "scheduler-service.synchronizer.type", havingValue = "couchbase")
 public class CouchbaseConfigurationProperties {
 
     private final CouchbaseProperties couchbaseProperties;

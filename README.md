@@ -3,6 +3,15 @@
 ![Trendyol Scheduler Service](https://raw.githubusercontent.com/Trendyol/trendyol-scheduler-service/master/src/main/resources/scheduler-service-icon.png)
 
 - Easily scheduled jobs for micro service architecture APIs.
+- It has two database choises : Postgres or MySQL
+- It has two job synchronization db choises : Couchbase or Redis
+
+The Application runs with Postgres + Couchbase by default. If you want to use MySQL, you can add -Dspring.profiles.active=mysql as JVM option.
+To switch the job synchronization type, you can set "SCHEDULER_SERVICE_SYNCHRONIZER_TYPE" environment parameter as "couchbase" or "redis".
+
+For example:
+- SCHEDULER_SERVICE_SYNCHRONIZER_TYPE = couchbase
+- SCHEDULER_SERVICE_SYNCHRONIZER_TYPE = redis
 
 ## Requirements
 

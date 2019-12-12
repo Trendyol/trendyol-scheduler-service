@@ -4,7 +4,7 @@ import com.trendyol.scheduler.builder.domain.ScheduledJobExecutionHistoryBuilder
 import com.trendyol.scheduler.domain.ScheduledJob;
 import com.trendyol.scheduler.domain.ScheduledJobExecutionHistory;
 import com.trendyol.scheduler.domain.enums.JobExecutionStatus;
-import com.trendyol.scheduler.service.JobSynchronizeService;
+import com.trendyol.scheduler.service.JobSynchronizer;
 import com.trendyol.scheduler.service.ScheduledJobExecutionHistoryService;
 import com.trendyol.scheduler.utils.Clock;
 import org.junit.Before;
@@ -29,7 +29,7 @@ public class ScheduleJobStateCheckJobTest {
     private ScheduleJobStateCheckJob scheduleJobStateCheckJob;
 
     @Mock
-    private JobSynchronizeService jobSynchronizeService;
+    private JobSynchronizer jobSynchronizer;
 
     @Mock
     private ScheduledJobExecutionHistoryService scheduledJobExecutionHistoryService;
@@ -37,7 +37,7 @@ public class ScheduleJobStateCheckJobTest {
     @Before
     public void init() {
         this.scheduleJobStateCheckJob = new ScheduleJobStateCheckJob(
-                new InternalJobExecutorTemplate(jobSynchronizeService),
+                new InternalJobExecutorTemplate(jobSynchronizer),
                 scheduledJobExecutionHistoryService
         );
     }
@@ -47,7 +47,7 @@ public class ScheduleJobStateCheckJobTest {
         //given
         Clock.freeze();
 
-        when(jobSynchronizeService.isAssignableToThisExecution(any(ScheduledJob.class))).thenReturn(true);
+        when(jobSynchronizer.isAssignableToThisExecution(any(ScheduledJob.class))).thenReturn(true);
 
         ScheduledJobExecutionHistory executionHistory1 = ScheduledJobExecutionHistoryBuilder.aScheduledJobExecutionHistory()
                 .jobExecutionStatus(JobExecutionStatus.In_Progress)
