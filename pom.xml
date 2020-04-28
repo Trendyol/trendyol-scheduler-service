@@ -49,7 +49,7 @@
         <plugin.surefire.version>2.22.1</plugin.surefire.version>
 
         <!-- Versions -->
-        <checkstyle.version>8.18</checkstyle.version>
+        <checkstyle.version>8.29</checkstyle.version>
     </properties>
 
     <dependencies>
